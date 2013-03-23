@@ -3,7 +3,7 @@
 
 	"name": "Better ScrumDo",
 	"description": "A better ScrumDo",
-	"version": "1.0",
+	"version": "0.0.1-pre",
 	
 	"background": {
 		"scripts": ["better-scrumdo-background.js"],

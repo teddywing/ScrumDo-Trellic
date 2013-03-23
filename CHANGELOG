@@ -1,0 +1,10 @@
+CHANGELOG
+=========
+
+# v0.0.1-pre - 2013.03.22
+Initial pre-release version
+
+- Implement reload of ScrumDo board. Currently, a tab with the ScrumDo board 
+  is set to reload every minute if the tab is active. If the tab is 
+  re-activated after more than one minute has passed since the last view, a 
+  reload is also triggered.

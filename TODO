@@ -8,3 +8,5 @@ TODO
 - 'b' key to open the top nav drop-down and allow you to switch between 
   iteration boards
 - 'L' to open a new tab with the iteration in list view
+- 't' to open and close tasks drop-down. On open focus to Summary field
+- Add a Chrome options panel to allow users to select the refresh interval
