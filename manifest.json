@@ -13,7 +13,8 @@
 	"content_scripts": [
 		{
 			"matches": ["*://*.scrumdo.com/projects/project/*/iteration/*/board"],
-			"js": ["jquery.min.js", "better-scrumdo.js"]
+			"js": ["jquery.min.js", "better-scrumdo.js"],
+			"css": ["better-scrumdo.css"]
 		}
 	],
 
