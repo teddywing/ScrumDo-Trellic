@@ -127,12 +127,11 @@ $(function() {
 		
 		// Horizontal
 		this.current_left_element = function() {
-			return this.current.parent().parent().prev(this.column_el).find(this.el).first();
+			return this.previous_column().find(this.el).first();
 		};
 		
 		this.current_right_element = function() {
-			// return this.current.parent().parent().next(this.column_el).find(this.el).first();
-			return this.next_column_with_stories().find(this.el).first();
+			return this.next_column().find(this.el).first();
 		};
 		
 		// Column methods
@@ -161,14 +160,14 @@ $(function() {
 		};
 		
 		this.sibling_column = function(column_index, offset) {
-			var that = this;
-			var wraparound = function(index) {
-				if (index < 0) { return that.total_columns - 1; }
-				else if (index >= that.total_columns) { return 0; }
-				else { return index; }
-			};
+			// Don't let people move outside the edge columns
+			var new_column_index = column_index + offset;
+			if (new_column_index >= this.total_columns
+				|| new_column_index < 0) {
+				return this.current_column();
+			}
 			
-			return this.$column_el.eq(wraparound(column_index + offset));
+			return this.$column_el.eq(column_index + offset);
 		};
 		
 		this.next_column = function() {
@@ -177,31 +176,6 @@ $(function() {
 		
 		this.previous_column = function() {
 			return this.sibling_column(this.current_column_index(), -1);
-		};
-		
-		this.next_column_with_stories = function() {
-			var column = this.$column_el.eq(this.current_column_index() + 1);
-			console.log('THE NEXT THREE LINES OF COLUMNS');
-			console.log(this.next_column());
-			console.log(this.sibling_column(this.current_column_index(), 2));
-			console.log(this.sibling_column(this.current_column_index(), 3));
-			// console.log(this.current_column_index());
-			// console.log(column.index());
-			// while (!this.column_has_stories(column.index())) {
-			// 	console.log(this.column_has_stories(column.index()));
-			// 	column = this.next_column();
-			// }
-			
-			// do {
-			// 	console.log(this.column_has_stories(column.index()));
-			// 	column = this.next_column();
-			// } while (!this.column_has_stories(column.index()));
-			
-			return column;
-		};
-		
-		this.previous_column_with_stories = function() {
-			
 		};
 		
 		
