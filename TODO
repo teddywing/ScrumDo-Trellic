@@ -1,0 +1,10 @@
+TODO
+====
+
+- Create mechanism to select stories on board using arrow keys
+- Use 'i' key (or other that makes sense) to bring up story info/edit modal
+- 'a' to bring up modal and focus on Assignees field
+- '<' and '>' keys to move a story from one column to another
+- 'b' key to open the top nav drop-down and allow you to switch between 
+  iteration boards
+- 'L' to open a new tab with the iteration in list view
