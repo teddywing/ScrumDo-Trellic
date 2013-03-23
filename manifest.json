@@ -1,0 +1,24 @@
+{
+	"manifest_version": 2,
+
+	"name": "Better ScrumDo",
+	"description": "A better ScrumDo",
+	"version": "1.0",
+	
+	"background": {
+		"scripts": ["better-scrumdo-background.js"],
+		"persistent": false
+	},
+	
+	"content_scripts": [
+		{
+			"matches": ["*://*.scrumdo.com/projects/project/*/iteration/*/board"],
+			"js": ["jquery.min.js", "better-scrumdo.js"]
+		}
+	],
+
+	"permissions": [
+		"*://*.scrumdo.com/",
+		"tabs"
+	]
+}
