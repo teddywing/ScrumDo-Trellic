@@ -1,6 +1,10 @@
 TODO
 ====
 
+# 2013.02.23:
+/ Create mechanism to select stories on board using arrow keys
+- Documentation
+
 # 2013.02.22:
 - Create mechanism to select stories on board using arrow keys
 - Use 'i' key (or other that makes sense) to bring up story info/edit modal
