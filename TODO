@@ -7,7 +7,7 @@ v Use 'i' key (or other that makes sense) to bring up story info/edit modal
 v 'a' to bring up modal and focus on Assignees field
 - Documentation
 v Esc should work to close the story info modal
-x 'p' to point the story
+- 'p' to point the story
 v 'b' key to open the top nav drop-down and allow you to switch between 
   iteration boards
 - 'L' to open a new tab with the iteration in list view
@@ -15,6 +15,8 @@ v 't' to open and close tasks drop-down. On open focus to Summary field
 - Disable keyboard shortcuts when an input field is focused 
   (all except for esc)
 - esc should exit out of tasks drop-down
+- change $(document).on('keydown') to something other than document, unless 
+  the key binding really needs it
 
 # 2013.02.22:
 - Create mechanism to select stories on board using arrow keys
