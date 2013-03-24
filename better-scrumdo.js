@@ -57,6 +57,7 @@
 
 
 var StoryClass;
+var Story;
 $(function() {
 	StoryClass = function() {
 		// Current story
@@ -65,6 +66,7 @@ $(function() {
 		this.column_el = '.scrum_board_column';
 		this.$column_el = $('.scrum_board_column');
 		this.total_columns = this.$column_el.length;
+		this.project_panel_open = false;
 		this.current = null;
 	
 		this.set_current = function($el) {
@@ -179,8 +181,103 @@ $(function() {
 		};
 		
 		
+		// Edit story
+		this.wait_for_edit_modal_to_load = function(func) {
+			return setTimeout(func, 500);
+		};
+		
+		this.open_edit_modal = function() {
+			this.current.find('.storyIcons').children('a').eq(1).trigger('click');
+		};
+		
+		this.close_edit_modal = function() {
+			$('.overlay_close').trigger('click');
+		};
+		
+		this.edit = function() {
+			if (this.current) {
+				this.open_edit_modal();
+				this.wait_for_edit_modal_to_load(function() {
+					$('textarea#id_summary').focus();
+				});
+			}
+		};
+		
+		// Go to assignees
+		this.assign = function() {
+			if (this.current) {
+				this.open_edit_modal();
+				this.wait_for_edit_modal_to_load(function() {
+					$('.tag_holder').eq(1).children('ul').children('.tagit-new').children('input').focus();
+				});
+			}
+		};
+		
+		// Point story
+		// Can't use left and right arrows to change points so doesn't work
+		this.point = function() {
+			if (this.current) {
+				this.open_edit_modal();
+				this.wait_for_edit_modal_to_load(function() {
+					$('#points_section').find('input[name="points"]:checked').focus();
+				});
+			}
+		};
+		
+		// Toggle tasks section
+		this.tasks = function() {
+			if (this.current) {
+				this.current.find('.show_tasks_link').trigger('click');
+				
+				// Focus task summary field
+				that = this;
+				setTimeout(function() {
+					that.current.find('.tasks_area input[name="summary"]').focus();
+				}, 500);
+			}
+		};
+		
+		
+		// Open project drop-down
+		this.enable_project_panel_tabbing = function() {
+			$('.project-menu-iteration-list-item').attr('tabindex', '0');
+			$('.project-menu-iteration-list-item').eq(1).focus()
+			
+			// Enter redirects that iteration
+			$('.project-menu-iteration-list-item').on('keydown', function(e) {
+				var key = (e.which || e.keyCode);
+				
+				if (key === KeyCodes.enter) {
+					window.location.href = $(this).children('a').attr('href');
+				}
+			});
+		};
+		
+		this.disable_project_panel_tabbing = function() {
+			$('.project-menu-iteration-list-item').removeAttr('tabindex');
+			
+			$('.project-menu-iteration-list-item').off('keydown')
+		};
+		
+		this.toggle_project_panel = function() {
+			if (!this.project_panel_open) {
+				$('.project-dropdown-menu').parent().trigger('click');
+				this.project_panel_open = true;
+				
+				this.enable_project_panel_tabbing();
+			}
+			else {
+				this.disable_project_panel_tabbing();
+				$('body').trigger('click')
+				this.project_panel_open = false;
+			}
+		};
+		
+		
 		return this;
 	};
+	
+	Story = new StoryClass();
 });
 
 
@@ -190,14 +287,33 @@ var KeyCodes = {
 		right: 39,
 		up: 38,
 		down: 40
-	}
+	},
+	numbers: {
+		0: 48,
+		1: 49,
+		2: 50,
+		3: 51,
+		4: 52,
+		5: 53,
+		6: 54,
+		7: 55,
+		8: 56,
+		9: 57
+	},
+	a: 65,
+	b: 66,
+	i: 73,
+	l: 76,
+	p: 80,
+	t: 84,
+	enter: 13,
+	esc: 27
 };
 
 
 // Set the current story
 $(function() {
 	var $story_el = $('.scrum_board_story_block');
-	var Story = new StoryClass();
 	
 	// Mouseover
 	$story_el.on('mouseenter', function() {
@@ -237,4 +353,63 @@ $(function() {
 				break;
 		}
 	});
+});
+
+
+// Story actions - keyboard shortcuts
+$(function() {
+	// Disable keyboard shortcuts when an input element is focused
+	$('input[type="text"], textarea').on('focus', function() {
+		// Disable
+		disable_keyboard_shortcuts();
+	}).on('blur', function() {
+		// Enable
+		enable_keyboard_shortcuts();
+	});
+	
+	var bind_keyboard_commands = function(e) {
+		var key = (e.which || e.keyCode);
+	
+		// console.log(e);
+	
+		var responds_to = [];
+		// for (var k in KeyCodes){}
+	
+		switch (key) {
+			case KeyCodes.i:
+				Story.edit();
+				break;
+			case KeyCodes.a:
+				Story.assign();
+				break;
+			case KeyCodes.p:
+				Story.point();
+				break;
+			case KeyCodes.t:
+				Story.tasks();
+				break;
+			case KeyCodes.b:
+				Story.toggle_project_panel();
+				break;
+			case KeyCodes.esc:
+				Story.close_edit_modal();
+				break;
+			case KeyCodes.l:
+				if (e.shiftKey) {
+					Story.list_view();
+				}
+				break;
+		}
+	};
+	
+	var disable_keyboard_shortcuts = function() {
+		console.log('DISABLED');
+		$(document).off('keydown', bind_keyboard_commands);
+	};
+	
+	var enable_keyboard_shortcuts = function() {
+		console.log('ENABLED');
+		$(document).on('keydown', bind_keyboard_commands);
+	};
+	enable_keyboard_shortcuts();
 });
