@@ -5,6 +5,14 @@ TODO
 v Add a Chrome options panel to allow users to select the refresh interval
 - If you press numbers and then Enter in a short enough amount of time, the 
   story corresponding to the numbers you typed in gets selected
+- Documentation
+- 'p' to point the story
+- 'L' to open a new tab with the iteration in list view
+- Disable keyboard shortcuts when an input field is focused 
+  (all except for esc)
+- esc should exit out of tasks drop-down
+- change $(document).on('keydown') to something other than document, unless 
+  the key binding really needs it
 
 # 2013.02.23:
 > Create mechanism to select stories on board using arrow keys
