@@ -25,6 +25,15 @@
 		}
 	);
 	
+	// Set reload interval to user-defined interval
+	chrome.extension.sendMessage({ get_option: 'refresh_interval' }, function(response) {
+		if (response.refresh_interval) {
+			clear_reload_interval();
+			RELOAD_INTERVAL = response.refresh_interval * 1000;
+			set_reload_interval();
+		}
+	});
+	
 	var set_reload_interval = function() {
 		reload_interval_obj = window.setInterval(reload_page, RELOAD_INTERVAL);
 	};

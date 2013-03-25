@@ -17,4 +17,17 @@
 			}
 		});
 	});
+	
+	
+	// set interval value
+	chrome.extension.onMessage.addListener(
+		function(request, sender, send_response) {
+			if (request.get_option) {
+				resp_hash = {};
+				resp_hash[request.get_option] = localStorage[request.get_option];
+				
+				send_response(resp_hash);
+			}
+		}
+	);
 })();

@@ -1,6 +1,11 @@
 TODO
 ====
 
+# 2013.02.24:
+v Add a Chrome options panel to allow users to select the refresh interval
+- If you press numbers and then Enter in a short enough amount of time, the 
+  story corresponding to the numbers you typed in gets selected
+
 # 2013.02.23:
 > Create mechanism to select stories on board using arrow keys
 v Use 'i' key (or other that makes sense) to bring up story info/edit modal

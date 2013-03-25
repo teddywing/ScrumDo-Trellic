@@ -17,6 +17,8 @@
 			"css": ["better-scrumdo.css"]
 		}
 	],
+	
+	"options_page": "options.html",
 
 	"permissions": [
 		"*://*.scrumdo.com/",
