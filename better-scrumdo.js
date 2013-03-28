@@ -207,6 +207,7 @@ $(function() {
 			if (this.current) {
 				this.open_edit_modal();
 				this.wait_for_edit_modal_to_load(function() {
+					KeyCommandManager.toggle_keyboard_events_on_input_focus();
 					$('textarea#id_summary').focus();
 				});
 			}
@@ -241,6 +242,7 @@ $(function() {
 				// Focus task summary field
 				that = this;
 				setTimeout(function() {
+					KeyCommandManager.toggle_keyboard_events_on_input_focus();
 					that.current.find('.tasks_area input[name="summary"]').focus();
 				}, 500);
 			}
@@ -320,6 +322,70 @@ var KeyCodes = {
 };
 
 
+var cKeyCommandManager = function() {
+	var self = this;
+	
+	this.toggle_keyboard_events_on_input_focus = function() {
+		$('input[type="text"], textarea')
+			.off('focus', this.disable_keyboard_shortcuts)
+			.off('blur', this.enable_keyboard_shortcuts);
+			
+		$('input[type="text"], textarea')
+			.on('focus', this.disable_keyboard_shortcuts)
+			.on('blur', this.enable_keyboard_shortcuts);
+	};
+	
+	this.bind_keyboard_commands = function(e) {
+		var key = (e.which || e.keyCode);
+		
+		// console.log(e);
+		
+		var responds_to = [];
+		// for (var k in KeyCodes){}
+		
+		switch (key) {
+			case KeyCodes.i:
+				Story.edit();
+				break;
+			case KeyCodes.a:
+				Story.assign();
+				break;
+			case KeyCodes.p:
+				Story.point();
+				break;
+			case KeyCodes.t:
+				Story.tasks();
+				break;
+			case KeyCodes.b:
+				Story.toggle_project_panel();
+				break;
+			case KeyCodes.esc:
+				Story.close_edit_modal();
+				break;
+			case KeyCodes.l:
+				if (e.shiftKey) {
+					Story.list_view();
+				}
+				break;
+		}
+	};
+	
+	this.disable_keyboard_shortcuts = function() {
+		console.log('KEYBOARD COMMANDS DISABLED');
+		$(document).off('keydown', self.bind_keyboard_commands);
+	};
+	
+	this.enable_keyboard_shortcuts = function() {
+		console.log('KEYBOARD COMMANDS ENABLED');
+		$(document).on('keydown', self.bind_keyboard_commands);
+	};
+	
+	
+	return this;
+};
+var KeyCommandManager = new cKeyCommandManager();
+
+
 // Set the current story
 $(function() {
 	var $story_el = $('.scrum_board_story_block');
@@ -362,63 +428,7 @@ $(function() {
 				break;
 		}
 	});
-});
-
-
-// Story actions - keyboard shortcuts
-$(function() {
-	// Disable keyboard shortcuts when an input element is focused
-	$('input[type="text"], textarea').on('focus', function() {
-		// Disable
-		disable_keyboard_shortcuts();
-	}).on('blur', function() {
-		// Enable
-		enable_keyboard_shortcuts();
-	});
 	
-	var bind_keyboard_commands = function(e) {
-		var key = (e.which || e.keyCode);
 	
-		// console.log(e);
-	
-		var responds_to = [];
-		// for (var k in KeyCodes){}
-	
-		switch (key) {
-			case KeyCodes.i:
-				Story.edit();
-				break;
-			case KeyCodes.a:
-				Story.assign();
-				break;
-			case KeyCodes.p:
-				Story.point();
-				break;
-			case KeyCodes.t:
-				Story.tasks();
-				break;
-			case KeyCodes.b:
-				Story.toggle_project_panel();
-				break;
-			case KeyCodes.esc:
-				Story.close_edit_modal();
-				break;
-			case KeyCodes.l:
-				if (e.shiftKey) {
-					Story.list_view();
-				}
-				break;
-		}
-	};
-	
-	var disable_keyboard_shortcuts = function() {
-		console.log('DISABLED');
-		$(document).off('keydown', bind_keyboard_commands);
-	};
-	
-	var enable_keyboard_shortcuts = function() {
-		console.log('ENABLED');
-		$(document).on('keydown', bind_keyboard_commands);
-	};
-	enable_keyboard_shortcuts();
+	KeyCommandManager.enable_keyboard_shortcuts();
 });
