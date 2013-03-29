@@ -21,6 +21,7 @@ v Disable keyboard shortcuts when an input field is focused
 / Create a KeyboardCommands/KeyboardShortcuts class to manage abstraction of 
   setting up shortcuts, separate shortcuts into related groups, and handle 
   activation and deactivation of groups of shortcuts
+- BUG: disable arrow keys on input focus
 
 # 2013.02.26:
 - '<' and '>' keys to move a story from one column to another
