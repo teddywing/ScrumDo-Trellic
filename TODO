@@ -1,6 +1,28 @@
 TODO
 ====
 
+# 2013.04.02:
+- '<' and '>' keys to move a story from one column to another
+- esc should exit out of tasks drop-down
+- change $(document).on('keydown') to something other than document, unless 
+  the key binding really needs it
+> Create mechanism to select stories on board using arrow keys
+- 'p' to point the story
+- 'L' to open a new tab with the iteration in list view
+- If you press numbers and then Enter in a short enough amount of time, the 
+  story corresponding to the numbers you typed in gets selected
+- Documentation
+- Apple-Enter to update a story from within the story edit modal
+- 'c' to comment on story in the story list (or at least something to 
+  permalink to the story in the story list)
+- keyboard command to add a new story
+/ Create a KeyboardCommands/KeyboardShortcuts class to manage abstraction of 
+  setting up shortcuts, separate shortcuts into related groups, and handle 
+  activation and deactivation of groups of shortcuts
+- BUG: disable arrow keys on input focus
+- Scroll down when you get to the bottom of the window and continue pressing 
+  the down arrow (same in reverse for up arrow)
+
 # 2013.02.28:
 - '<' and '>' keys to move a story from one column to another
 v Disable keyboard shortcuts when an input field is focused 
